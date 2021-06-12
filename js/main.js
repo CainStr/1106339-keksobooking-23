@@ -1,22 +1,19 @@
-// function randomIntegers(min, max) {
-//   if (max > min && min >= 0) {
-//     return Math.floor(Math.random() * (max - min) + min);
-//   } else {
-//     alert('Проверь числа');
-//   }
-// }
-// randomIntegers(-1, 10);
-// или этот вариант--->
+const randomConverterFractional = (min, max) => {
+  if (max > min && min >= 0) {
+    return Math.floor(Math.random() * (max - min) + min);
+  } else {
+    throw new RangeError('Проверь числа');
+  }
+};
 
-const randomIntegers = (min, max) => (max > min && min >= 0) ?
-  Math.floor(Math.random() * (max - min) + min) :
-  // eslint-disable-next-line no-alert
-  alert('Проверь числа');
-randomIntegers(0, 10);
+randomConverterFractional(0, 10);
 
+const randomConverterInteger = (min, max) => {
+  if (max > min && min >= 0) {
+    return Math.random() * (max - min) + min;
+  } else {
+    throw new RangeError('Проверь числа!');
+  }
+};
 
-const randomFractional = (min, max) => (max > min && min >= 0) ?
-  Math.random() * (max - min) + min :
-  // eslint-disable-next-line no-alert
-  alert('Проверь числа');
-randomFractional(0, 10);
+randomConverterInteger(0, 10).toFixed(4);
