@@ -1,4 +1,4 @@
-const randomConverterFractional = (min, max) => {
+const generateFractional = (min, max) => {
   if (max > min && min >= 0) {
     return Math.floor(Math.random() * (max - min) + min);
   } else {
@@ -6,14 +6,16 @@ const randomConverterFractional = (min, max) => {
   }
 };
 
-randomConverterFractional(0, 10);
+// eslint-disable-next-line no-console
+console.log(generateFractional(0, 10));
 
-const randomConverterInteger = (min, max) => {
+const generateInt = (min, max) => {
   if (max > min && min >= 0) {
-    return Math.random() * (max - min) + min;
-  } else {
-    throw new RangeError('Проверь числа!');
+    return Number((Math.random() * (max - min) + min).toFixed(4));
   }
+
+  throw new RangeError('Проверь числа!');
 };
 
-randomConverterInteger(0, 10).toFixed(4);
+// eslint-disable-next-line no-console
+console.log(generateInt(0, 10));
