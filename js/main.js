@@ -44,7 +44,6 @@ const generateInt = (min, max) => {
   if (max > min && min >= 0) {
     return Math.round(Math.random() * (max - min) + min);
   }
-
   throw new RangeError('Проверь числа');
 };
 
@@ -52,7 +51,6 @@ const generateFractional = (min, max, afterTheSign) => {
   if (max > min && min >= 0) {
     return (Math.random() * (max - min) + min).toFixed(afterTheSign);
   }
-  
   throw new RangeError('Проверь числа!');
 };
 
