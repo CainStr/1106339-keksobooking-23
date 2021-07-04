@@ -1,90 +1,100 @@
-const maxArrayLength = 10;
-const minArrayLength = 0;
-const numbersAfterZero = 4;
-const guestsCountMin = 1;
-const guestsCountMax = 5;
+const MAX_ARRAY_LENGTH = 10;
+const NUMBER_AFTER_ZERO = 4;
+const GUESTS_COUNT_MIN = 1;
+const GUESTS_COUNT_MAX = 5;
+const OFFER_AMOUNT = 10;
+const MAX_ROOMS = 7;
+const MAX_PRICE = Math.pow(10, 7);
+const MIN_LAT = 35.65000;
+const MAX_LAT = 35.70000;
+const MIN_LNG = 139.70000;
+const MAX_LNG = 139.80000;
+
+const TITLES = [
+  'Квартира с не самыми лучшими соседями', 'Лучше доплатить за кондиционер :)', 'Лучшее предложение',
+  'Это место ты запомнишь навсегда', 'Вид на море', 'Обычное место', 'Самое дешевое место',
+  'Кладовка и то больше', 'Иногда орет сосед', 'Вид на крематорий',
+];
+const TYPES = [
+  'palace', 'flat', 'house', 'bungalow', 'hotel',
+];
+const CHECKINS = [
+  '12:00', '13:00', '14:00',
+];
+const CHECKOUTS = [
+  '12:00', '13:00', '14:00',
+];
+const FEATURES = [
+  'wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner',
+];
+const PHOTOS = [
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
+];
+
+const DESCRIPTIONS = [
+  'Нет парковочного места',
+  'Происходят странные вещи',
+  'Врезаются перелетные птицы в стекло',
+  'Толстенные стены, здесь вам ничего не грозит',
+];
 
 const generateInt = (min, max) => {
-  if (max > min && min >= minArrayLength) {
-    return Number(Math.round(Math.random() * (max - min) + min));
+  if (max > min && min >= 0) {
+    return Math.round(Math.random() * (max - min) + min);
   }
 
   throw new RangeError('Проверь числа');
 };
 
 const generateFractional = (min, max, afterTheSign) => {
-  if (max > min && min >= minArrayLength) {
-    return Number((Math.random() * (max - min) + min).toFixed(afterTheSign));
+  if (max > min && min >= 0) {
+    return (Math.random() * (max - min) + min).toFixed(afterTheSign);
   }
 
   throw new RangeError('Проверь числа!');
 };
 
-const offer = {
-  titlesArray: ['Квартира с не самыми лучшими соседями', 'Лучше доплатить за кондиционер :)', 'Лучшее предложение',
-    'Это место ты запомнишь навсегда', 'Вид на море', 'Обычное место', 'Самое дешевое место',
-    'Кладовка и то больше', 'Иногда орет сосед', 'Вид на крематорий'],
-  typesArray: ['palace', 'flat', 'house', 'bungalow', 'hotel'],
-  checkinArray: ['12:00', '13:00', '14:00'],
-  checkoutArray: ['12:00', '13:00', '14:00'],
-  featuresArray: ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'],
-  photosArray: ['https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
-    'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
-    'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'],
-  descriptionArray: [' нет парковочного места',
-    ' происходят странные вещи',
-    ' врезаются перелетные птицы в стекло',
-    ' толстенные стены, здесь вам ничего не грозит'],
-};
+const getRandomArrayElement = (elements) => elements[generateInt(0, elements.length - 1)];
+const getRandomArray = (number) => generateInt(0, number.length - 1);
 
-const getRandomArrayElement = (elements) => generateInt(minArrayLength, elements.length - 1);
-
-const addingZero = () => {
-  for (let numberAvatar = 0; numberAvatar < maxArrayLength; numberAvatar++) {
-    if (numberAvatar < maxArrayLength && numberAvatar > minArrayLength) {
-      return `0${numberAvatar}`;
+const createOffer = (index) => {
+  const addingZero = () => {
+    if (index < MAX_ARRAY_LENGTH && index > 0) {
+      return `0${index}`;
     }
-    if (numberAvatar === maxArrayLength || numberAvatar === minArrayLength) {
-      return numberAvatar;
+    if (index === MAX_ARRAY_LENGTH || index === MAX_ARRAY_LENGTH) {
+      return index;
     }
-  }
-};
-const commentForDescription = 'В добавок';
-const createOffers = () => ({
-  offer: {
-    Title: offer.titlesArray[getRandomArrayElement(offer.titlesArray)],
-    Description: `${commentForDescription},${offer.descriptionArray[getRandomArrayElement(offer.descriptionArray)]}`,
-    Type: offer.typesArray[getRandomArrayElement(offer.typesArray)],
-    Rooms: Number(((Math.random()) * 1000).toFixed()),
-    Guests: generateInt(guestsCountMin, guestsCountMax),
-    Price: Number(((Math.random()) * 1000000).toFixed()),
-    Checkin: offer.checkinArray[getRandomArrayElement(offer.checkinArray)],
-    Checkout: offer.checkoutArray[getRandomArrayElement(offer.checkoutArray)],
-    Features: offer.featuresArray[getRandomArrayElement(offer.featuresArray)],
-    Photos: offer.photosArray[getRandomArrayElement(offer.photosArray)],
-  },
-});
-const similarOffers = new Array(maxArrayLength);
-for (let index = 0; index < similarOffers.length; index++) {
-  similarOffers[index] = createOffers();
-
-}
-
-const lat = (min, max) => (generateFractional(min, max, numbersAfterZero));
-const lng = (min, max) => (generateFractional(min, max, numbersAfterZero));
-
-for (let index = 0; index < similarOffers.length; index++) {
-  const locationLat = lat(35.65000, 35.70000);
-  const locationLng = lng(139.70000, 139.80000);
-  Object.assign(similarOffers[index].offer, {
-    address: `${locationLat}, ${locationLng}`,
-  });
-  Object.assign(similarOffers[index], {
-    location: {lat: locationLat, lng: locationLng},
-  });
-  Object.assign(similarOffers[index], {
+  };
+  const avatarUrl = `img/avatars/user${addingZero(index)}.png`;
+  const locationLat = generateFractional(MIN_LAT, MAX_LAT, NUMBER_AFTER_ZERO);
+  const locationLng = generateFractional(MIN_LNG, MAX_LNG, NUMBER_AFTER_ZERO);
+  const photosArray = PHOTOS.slice(getRandomArray(PHOTOS), (getRandomArray(PHOTOS) + 1));
+  const featuresArray = FEATURES.slice(getRandomArray(FEATURES), (getRandomArray(FEATURES) + 1));
+  return {
     author: {
-      avatar: `img/avatars/user${addingZero() + (index + 1)}.png`,
+      avatar: avatarUrl,
     },
-  });
-}
+    offer: {
+      title: getRandomArrayElement(TITLES),
+      address: `${locationLat}, ${locationLng}`,
+      price: generateInt(0, MAX_PRICE),
+      type: getRandomArrayElement(TYPES),
+      rooms: generateInt(0, MAX_ROOMS),
+      guests: generateInt(GUESTS_COUNT_MIN, GUESTS_COUNT_MAX),
+      checkin: getRandomArrayElement(CHECKINS),
+      checkout: getRandomArrayElement(CHECKOUTS),
+      features: `${featuresArray.join(' | ')}`,
+      description: getRandomArrayElement(DESCRIPTIONS),
+      photos: `${photosArray.join(' | ')}`,
+    },
+    location: {
+      lat: locationLat,
+      lng: locationLng,
+    },
+  };
+};
+// eslint-disable-next-line no-unused-vars
+const generateOffers = () => new Array(OFFER_AMOUNT).fill('').map((counter, index) => createOffer(index + 1));
