@@ -1,4 +1,3 @@
-const MAX_ARRAY_LENGTH = 10;
 const NUMBER_AFTER_ZERO = 4;
 const GUESTS_COUNT_MIN = 1;
 const GUESTS_COUNT_MAX = 5;
@@ -55,22 +54,16 @@ const generateFractional = (min, max, afterTheSign) => {
 };
 
 const getRandomArrayElement = (elements) => elements[generateInt(0, elements.length - 1)];
-const getRandomArray = (number) => generateInt(0, number.length - 1);
+const getRandomArrayNumber = (number) => generateInt(0, number.length - 1);
 
+const getRandomArray = (array) => array.slice(getRandomArrayNumber(array), (getRandomArrayNumber(array)) + 1).join(' | ');
 const createOffer = (index) => {
-  const addingZero = () => {
-    if (index < MAX_ARRAY_LENGTH && index > 0) {
-      return `0${index}`;
-    }
-    if (index === MAX_ARRAY_LENGTH || index === MAX_ARRAY_LENGTH) {
-      return index;
-    }
-  };
-  const avatarUrl = `img/avatars/user${addingZero(index)}.png`;
+  const avatarNumber = index < 10 ? `0${index}` : index;
+  const avatarUrl = `img/avatars/user${avatarNumber}.png`;
   const locationLat = generateFractional(MIN_LAT, MAX_LAT, NUMBER_AFTER_ZERO);
   const locationLng = generateFractional(MIN_LNG, MAX_LNG, NUMBER_AFTER_ZERO);
-  const photosArray = PHOTOS.slice(getRandomArray(PHOTOS), (getRandomArray(PHOTOS) + 1));
-  const featuresArray = FEATURES.slice(getRandomArray(FEATURES), (getRandomArray(FEATURES) + 1));
+  const photosArray = `${getRandomArray(PHOTOS)}`;
+  const featuresArray = `${getRandomArray(FEATURES)}`;
   return {
     author: {
       avatar: avatarUrl,
@@ -84,9 +77,9 @@ const createOffer = (index) => {
       guests: generateInt(GUESTS_COUNT_MIN, GUESTS_COUNT_MAX),
       checkin: getRandomArrayElement(CHECKINS),
       checkout: getRandomArrayElement(CHECKOUTS),
-      features: `${featuresArray.join(' | ')}`,
+      features: `${featuresArray}`,
       description: getRandomArrayElement(DESCRIPTIONS),
-      photos: `${photosArray.join(' | ')}`,
+      photos: `${photosArray}`,
     },
     location: {
       lat: locationLat,
