@@ -54,16 +54,17 @@ const generateFractional = (min, max, afterTheSign) => {
 };
 
 const getRandomArrayElement = (elements) => elements[generateInt(0, elements.length - 1)];
-const getRandomArrayNumber = (number) => generateInt(0, number.length - 1);
 
-const getRandomArray = (array) => array.slice(getRandomArrayNumber(array), (getRandomArrayNumber(array)) + 1).join(' | ');
+const getRandomArray = (array) => (
+  array.slice(0, generateInt(0, array.length - 1))
+);
+
 const createOffer = (index) => {
   const avatarNumber = index < 10 ? `0${index}` : index;
   const avatarUrl = `img/avatars/user${avatarNumber}.png`;
   const locationLat = generateFractional(MIN_LAT, MAX_LAT, NUMBER_AFTER_ZERO);
   const locationLng = generateFractional(MIN_LNG, MAX_LNG, NUMBER_AFTER_ZERO);
-  const photosArray = `${getRandomArray(PHOTOS)}`;
-  const featuresArray = `${getRandomArray(FEATURES)}`;
+
   return {
     author: {
       avatar: avatarUrl,
@@ -77,9 +78,9 @@ const createOffer = (index) => {
       guests: generateInt(GUESTS_COUNT_MIN, GUESTS_COUNT_MAX),
       checkin: getRandomArrayElement(CHECKINS),
       checkout: getRandomArrayElement(CHECKOUTS),
-      features: `${featuresArray}`,
+      features: getRandomArray(FEATURES),
       description: getRandomArrayElement(DESCRIPTIONS),
-      photos: `${photosArray}`,
+      photos: getRandomArray(PHOTOS),
     },
     location: {
       lat: locationLat,
@@ -89,3 +90,4 @@ const createOffer = (index) => {
 };
 // eslint-disable-next-line no-unused-vars
 const generateOffers = () => new Array(OFFER_AMOUNT).fill('').map((counter, index) => createOffer(index + 1));
+
