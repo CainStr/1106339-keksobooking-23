@@ -74,7 +74,7 @@ const createOffer = (index) => {
     },
   };
 };
-// eslint-disable-next-line no-unused-vars
+
 const generateOffers = () => new Array(OFFER_AMOUNT).fill('').map((counter, index) => createOffer(index + 1));
 
 export {
