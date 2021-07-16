@@ -22,19 +22,21 @@ const fillFeatures = (features, block) => {
     }
   });
 };
-// eslint-disable-next-line no-console
 
-const fillPhotos = (photo, block, src ) => {
-  const newPic = photo.cloneNode(true);
-  src.forEach((item) => {
-    newPic.src = item;
-    block.appendChild(newPic);
+const fillPhotos = (photo, block, photosArray) => {
+  block.innerHTML = '';
+  photosArray.forEach((item) => {
+    const newPhoto = photo.cloneNode(true);
+    newPhoto.src = item;
+    block.appendChild(newPhoto);
   });
-
-
 };
 
-const renderCard = ({offer}) => {
+const fillAvatar = (avatar, avatarElement) => {
+  avatarElement.src = avatar;
+};
+
+const renderCard = ({author, offer}) => {
   const {
     title,
     address,
@@ -49,6 +51,10 @@ const renderCard = ({offer}) => {
     features,
   } = offer;
 
+  const {
+    avatar,
+  } = author;
+
   const offerElement = similarOfferTemplate.cloneNode(true);
   const titleElement = offerElement.querySelector('.popup__title');
   const addressElement = offerElement.querySelector('.popup__text--address');
@@ -58,18 +64,17 @@ const renderCard = ({offer}) => {
   const timeOfPlacement = offerElement.querySelector('.popup__text--time');
   const featureElement = offerElement.querySelectorAll('.popup__feature');
   const descriptionElement = offerElement.querySelector('.popup__description');
-
   const photosElement = offerElement.querySelector('.popup__photos');
   const photo = offerElement.querySelector('.popup__photo');
-  // const avatarElement = offerElement.querySelector('.popup__avatar');
+  const avatarElement = offerElement.querySelector('.popup__avatar');
 
   titleElement.textContent = title ? title : titleElement.remove();
-  address ? addressElement.textContent = address : addressElement.remove();
-  price ? priceElement.textContent = (`${price} ₽/ночь`) : priceElement.remove();
-  type ? typeElement.textContent = typeDictionary[type] : typeElement.remove();
-  rooms && guests ? placement.textContent = `${rooms} комнаты для ${guests} гостей` : placement.remove();
-  checkin && checkout ? timeOfPlacement.textContent = `Заезд после ${checkin}, выезд до ${checkout}` : timeOfPlacement.remove();
-  description ? descriptionElement.textContent = description : descriptionElement.remove();
+  addressElement.textContent = address ? address : addressElement.remove();
+  priceElement.textContent = price ? `${price} ₽/ночь` : priceElement.remove();
+  typeElement.textContent = typeDictionary ? typeDictionary[type] : typeElement.remove();
+  placement.textContent = rooms && guests ? `${rooms} комнаты для ${guests} гостей` : placement.remove();
+  timeOfPlacement.textContent = checkin && checkout ? `Заезд после ${checkin}, выезд до ${checkout}` : timeOfPlacement.remove();
+  descriptionElement.textContent = description ? description : descriptionElement.remove();
 
   if (features) {
     fillFeatures(features, featureElement);
@@ -77,22 +82,20 @@ const renderCard = ({offer}) => {
     featureElement.remove();
   }
 
-  // if (photos.length>-1) {
+  if (photos.length !== 0) {
     fillPhotos(photo, photosElement, photos);
-  // } else {
-  //   photosElement.remove();
-  // }
-  console.log(photos);
+  } else {
+    photosElement.remove();
+  }
+
+  if (avatar) {
+    fillAvatar(avatar, avatarElement);
+  } else {
+    avatarElement.remove();
+  }
   return offerElement;
 };
 
-
-// eslint-disable-next-line no-console
-// if (card.author.avatar) {
-//   avatar.src = card.author.avatar;
-// } else {
-//   avatar.classList.add('visually-hidden');
-// }
 
 const card = renderCard(offers[0]);
 map.appendChild(card);
