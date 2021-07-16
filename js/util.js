@@ -15,7 +15,7 @@ const generateFractional = (min, max, afterTheSign) => {
 const getRandomArrayElement = (elements) => elements[generateInt(0, elements.length - 1)];
 
 const getRandomArray = (array) => (
-  array.slice(0, generateInt(0, array.length - 1))
+  array.slice(0, generateInt(0, array.length))
 );
 
 export {
