@@ -1,2 +1,2 @@
 import './generate-offers.js';
-import './module-mirror.js';
+import './cards.js';
