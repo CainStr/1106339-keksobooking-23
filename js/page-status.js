@@ -18,6 +18,8 @@ const changeStatusPage = (status) => {
     }
 
   } else {
+    mapFilters.classList.remove('ad-form--disabled');
+    form.classList.remove('ad-form--disabled');
     formFieldsets.forEach((item) => {
       item.disabled = DEACTIVATION;
     });
