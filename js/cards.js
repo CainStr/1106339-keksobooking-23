@@ -96,6 +96,11 @@ const renderCard = ({author, offer}) => {
   return offerElement;
 };
 
-
-const card = renderCard(offers[0]);
-map.appendChild(card);
+export {renderCard};
+//
+// for (let i = 0; i<offers.length ; i++) {
+//   const card = renderCard(offers[i]);
+//   // console.log(offers[i])
+//   map.appendChild(card);
+// }
+// console.log(map);
