@@ -1,6 +1,8 @@
 import {changeStatusPage} from './page-status.js';
-import {generateOffers} from './generate-offers.js';
+// import {generateOffers} from './generate-offers.js';
 import {renderCard} from './cards.js';
+import {createFetch} from './fetch.js';
+import {fetchError} from './fetch.js';
 
 const MAP_SCALE = 12;
 const TOKYO_COORDINATES = {
@@ -45,13 +47,17 @@ tokyoMarker.on('moveend', (evt) => {
   address.value = `${lat},  ${lng}`;
 });
 
-
-const resetButton = document.querySelector('.ad-form__reset');
-resetButton.addEventListener('click', () => {
+const resetForm = () => {
   tokyoMarker.setLatLng(TOKYO_COORDINATES);
   map.setView(
     TOKYO_COORDINATES,
     MAP_SCALE);
+};
+
+
+const resetButton = document.querySelector('.ad-form__reset');
+resetButton.addEventListener('click', () => {
+  resetForm();
 });
 
 const markerGroup = L.layerGroup().addTo(map);
@@ -86,4 +92,9 @@ const createCustomMarker = (offers) => {
   });
 };
 
-createCustomMarker(generateOffers());
+// eslint-disable-next-line no-console
+// console.log('map_js');
+createFetch(createCustomMarker, fetchError);
+export {resetForm};
+// console.log(createFetch());
+

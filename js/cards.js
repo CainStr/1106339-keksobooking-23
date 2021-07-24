@@ -1,9 +1,9 @@
-import {generateOffers} from './generate-offers.js';
+// import {generateOffers} from './generate-offers.js';
 
-const map = document.querySelector('#map-canvas');
+// const map = document.querySelector('#map-canvas');
 const similarOfferTemplate = document.querySelector('#card').content.querySelector('.popup');
-
-const offers = generateOffers();
+//
+// const offers = generateOffers();
 
 const typeDictionary = {
   flat: 'Квартира',
@@ -15,7 +15,7 @@ const typeDictionary = {
 
 const fillFeatures = (features, block) => {
   const modifiers = features.map((feature) => `popup__feature--${feature}`);
-  block.forEach((item) => {
+  new Array(block).forEach((item) => {
     const modifier = item.classList[1];
     if (!modifiers.includes(modifier)) {
       item.remove();
@@ -62,7 +62,7 @@ const renderCard = ({author, offer}) => {
   const typeElement = offerElement.querySelector('.popup__type');
   const placement = offerElement.querySelector('.popup__text--capacity');
   const timeOfPlacement = offerElement.querySelector('.popup__text--time');
-  const featureElement = offerElement.querySelectorAll('.popup__feature');
+  const featureElement = offerElement.querySelector('.popup__features');
   const descriptionElement = offerElement.querySelector('.popup__description');
   const photosElement = offerElement.querySelector('.popup__photos');
   const photo = offerElement.querySelector('.popup__photo');
@@ -78,11 +78,12 @@ const renderCard = ({author, offer}) => {
 
   if (features) {
     fillFeatures(features, featureElement);
+
   } else {
     featureElement.remove();
   }
 
-  if (photos.length !== 0) {
+  if (photos && photos.length !== 0) {
     fillPhotos(photo, photosElement, photos);
   } else {
     photosElement.remove();

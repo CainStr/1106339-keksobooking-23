@@ -1,4 +1,5 @@
-import './generate-offers.js';
+// import './generate-offers.js';
+import './fetch.js';
 import './cards.js';
 import './page-status.js';
 import './form-validation.js';

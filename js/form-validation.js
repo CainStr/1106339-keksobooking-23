@@ -1,3 +1,6 @@
+import {SERVER_DATA_POST} from './fetch.js';
+import {resetForm} from './map.js';
+
 const form = document.querySelector('.ad-form');
 const TYPES_HOUSING = form.querySelector('#type');
 const formTitle = form.querySelector('#title');
@@ -6,6 +9,11 @@ const roomsFilter = form.querySelector('#room_number');
 const formTimein = form.querySelector('#timein');
 const formTimeout = form.querySelector('#timeout');
 const guestsFilter = form.querySelector('#capacity');
+const successMessage = document.querySelector('#success').content.querySelector('.success').cloneNode(true);
+const errorMessage = document.querySelector('#error').content.querySelector('.error').cloneNode(true);
+const cancel = ['Escape', 'Esc'];
+const cancelEvent = (evt) => cancel.includes(evt.key);
+
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
@@ -87,6 +95,46 @@ const onCheckinChange = (evt) => {
 const onCheckOutChange = (evt) => {
   formTimein.value = evt.target.value;
 };
+
+const onEscDown = (evt) => {
+  if (cancelEvent(evt)) {
+    successMessage && successMessage.remove();
+    errorMessage && errorMessage.remove();
+    document.removeEventListener('keydown', onEscDown);
+  }
+};
+
+form.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  const formData = new FormData(evt.target);
+
+  fetch(
+    SERVER_DATA_POST,
+    {
+      method: 'POST',
+      body: formData,
+    },
+  )
+    .then((response) => {
+      if (response.ok) {
+        resetForm();
+        evt.target.reset();
+        document.body.appendChild(successMessage);
+        document.addEventListener('keydown', onEscDown);
+        successMessage.addEventListener('click', () => {
+          successMessage.remove();
+        });
+
+      } else {
+        document.body.appendChild(errorMessage);
+        document.addEventListener('keydown', onEscDown);
+        errorMessage.addEventListener('click', () => {
+          errorMessage.remove();
+        });
+      }
+    });
+});
+
 
 const setFormListeners = () => {
   setInitialFormState();
