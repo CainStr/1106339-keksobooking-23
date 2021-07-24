@@ -80,7 +80,6 @@ const renderCard = ({author, offer}) => {
     fillFeatures(features, featureElement);
 
   } else {
-    console.log(featureElement);
     featureElement.remove();
   }
 
