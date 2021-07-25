@@ -2,8 +2,7 @@ const SERVER_DATA_GET = 'https://23.javascript.pages.academy/keksobooking/data';
 const SERVER_DATA_POST = 'https://23.javascript.pages.academy/keksobooking';
 
 const fetchError = (error) => {
-  // eslint-disable-next-line no-console
-  console.log(error);
+  throw new RangeError(error);
 };
 
 const createFetch = () => fetch(
