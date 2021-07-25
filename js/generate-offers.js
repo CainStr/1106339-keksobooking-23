@@ -68,6 +68,7 @@ const createOffer = (index) => {
       description: getRandomArrayElement(DESCRIPTIONS),
       photos: getRandomArray(PHOTOS),
     },
+
     location: {
       lat: locationLat,
       lng: locationLng,
