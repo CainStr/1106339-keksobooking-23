@@ -6,7 +6,7 @@ const fetchError = (error) => {
   console.log(error);
 };
 
-const createFetch = (onSuccess, onError) => fetch(
+const createFetch = () => fetch(
   SERVER_DATA_GET,
   {
     method: 'GET',
@@ -20,11 +20,10 @@ const createFetch = (onSuccess, onError) => fetch(
 
     throw new Error(`${response.status} ${response.statusText}`);
   })
-  .then((json) => onSuccess(json))
   .catch((err) => {
-    onError(err);
+    fetchError(err);
   });
 
 
-export {createFetch, fetchError,SERVER_DATA_POST};
+export { createFetch, SERVER_DATA_POST };
 

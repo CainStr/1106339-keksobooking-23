@@ -28,6 +28,7 @@ const changeStatusPage = (status) => {
     }
   }
 };
+
 changeStatusPage(DEACTIVATION);
 
 export {changeStatusPage};
