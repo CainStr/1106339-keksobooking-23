@@ -1,8 +1,7 @@
-import {changeStatusPage} from './page-status.js';
-// import {generateOffers} from './generate-offers.js';
-import {renderCard} from './cards.js';
-import {createFetch} from './fetch.js';
-import {fetchError} from './fetch.js';
+import { changeStatusPage } from './page-status.js';
+import { renderCard } from './cards.js';
+import { createFetch } from './fetch.js';
+const offersFromFetchInPromise = createFetch();
 
 const MAP_SCALE = 12;
 const TOKYO_COORDINATES = {
@@ -54,7 +53,6 @@ const resetForm = () => {
     MAP_SCALE);
 };
 
-
 const resetButton = document.querySelector('.ad-form__reset');
 resetButton.addEventListener('click', () => {
   resetForm();
@@ -64,37 +62,42 @@ const markerGroup = L.layerGroup().addTo(map);
 
 const createCustomMarker = (offers) => {
 
-  offers.forEach((item) => {
-    const lat = item.location.lat;
-    const lng = item.location.lng;
-    const title = item.offer.title;
+  offers.forEach((item, index) => {
+    if (index < 10) {
+      const lat = item.location.lat;
+      const lng = item.location.lng;
+      const title = item.offer.title;
 
-    const icon = L.icon({
-      iconUrl: 'img/pin.svg',
-      iconSize: [40, 40],
-      iconAnchor: [20, 40],
-    });
-    const marker = L.marker({
-      lat,
-      lng,
-      title,
-    },
-    {
-      icon,
-    });
+      const icon = L.icon({
+        iconUrl: 'img/pin.svg',
+        iconSize: [40, 40],
+        iconAnchor: [20, 40],
+      });
+      const marker = L.marker({
+        lat,
+        lng,
+        title,
+      },
+      {
+        icon,
+      });
 
-    marker
-      .addTo(markerGroup)
-      .bindPopup(renderCard(item)),
-    {
-      keepInView: true,
-    };
+      marker
+        .addTo(markerGroup)
+        .bindPopup(renderCard(item)),
+      {
+        keepInView: true,
+      };
+    }
   });
 };
 
-// eslint-disable-next-line no-console
-// console.log('map_js');
-createFetch(createCustomMarker, fetchError);
-export {resetForm};
-// console.log(createFetch());
+const removeMarkers = () => {
+  markerGroup.clearLayers();
+};
+
+offersFromFetchInPromise
+  .then((offersFromServer) =>createCustomMarker(offersFromServer));
+
+export {removeMarkers, resetForm, offersFromFetchInPromise, createCustomMarker };
 

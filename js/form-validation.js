@@ -14,7 +14,6 @@ const errorMessage = document.querySelector('#error').content.querySelector('.er
 const cancel = ['Escape', 'Esc'];
 const cancelEvent = (evt) => cancel.includes(evt.key);
 
-
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 let MIN_PRICE_TO_NIGHT = 0;
@@ -26,6 +25,7 @@ const ROOMS_TO_GUESTS = {
   3: [3, 2, 1],
   100: [0],
 };
+
 const HOUSING_TYPES = {
   'bungalow': 0,
   'flat': 1000,
