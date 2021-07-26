@@ -1,18 +1,27 @@
-import { changeStatusPage } from './page-status.js';
-import { renderCard } from './cards.js';
-import { createFetch } from './fetch.js';
+import {changeStatusPage, DEACTIVATION} from './page-status.js';
+import {renderCard} from './cards.js';
+import {createFetch} from './fetch.js';
+
 const offersFromFetchInPromise = createFetch();
 
+const MAX_QUANTITY_MARKERS = 10;
 const MAP_SCALE = 12;
 const TOKYO_COORDINATES = {
   lat: 35.68154,
   lng: 139.78336,
 };
+
+const icon = L.icon({
+  iconUrl: 'img/pin.svg',
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
+});
+
 const address = document.querySelector('#address');
 
 const map = L.map('map-canvas')
   .on('load', () => {
-    changeStatusPage(false);
+    changeStatusPage(DEACTIVATION);
   })
   .setView(
     TOKYO_COORDINATES, MAP_SCALE,
@@ -62,34 +71,25 @@ const markerGroup = L.layerGroup().addTo(map);
 
 const createCustomMarker = (offers) => {
 
-  offers.forEach((item, index) => {
-    if (index < 10) {
-      const lat = item.location.lat;
-      const lng = item.location.lng;
-      const title = item.offer.title;
+  for (let item = 0; item < Math.min(offers.length, MAX_QUANTITY_MARKERS); item++) {
+    const offersItem = offers[item];
+    const lat = offersItem.location.lat;
+    const lng = offersItem.location.lng;
+    const marker = L.marker({
+      lat,
+      lng,
+    },
+    {
+      icon,
+    });
 
-      const icon = L.icon({
-        iconUrl: 'img/pin.svg',
-        iconSize: [40, 40],
-        iconAnchor: [20, 40],
-      });
-      const marker = L.marker({
-        lat,
-        lng,
-        title,
-      },
-      {
-        icon,
-      });
-
-      marker
-        .addTo(markerGroup)
-        .bindPopup(renderCard(item)),
-      {
-        keepInView: true,
-      };
-    }
-  });
+    marker
+      .addTo(markerGroup)
+      .bindPopup(renderCard(offers[item])),
+    {
+      keepInView: true,
+    };
+  }
 };
 
 const removeMarkers = () => {
@@ -97,7 +97,7 @@ const removeMarkers = () => {
 };
 
 offersFromFetchInPromise
-  .then((offersFromServer) =>createCustomMarker(offersFromServer));
+  .then((offersFromServer) => createCustomMarker(offersFromServer));
 
-export {removeMarkers, resetForm, offersFromFetchInPromise, createCustomMarker };
+export {removeMarkers, resetForm, offersFromFetchInPromise, createCustomMarker};
 

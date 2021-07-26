@@ -100,8 +100,15 @@ const onEscDown = (evt) => {
   if (cancelEvent(evt)) {
     successMessage && successMessage.remove();
     errorMessage && errorMessage.remove();
-    document.removeEventListener('keydown', onEscDown);
   }
+
+  document.removeEventListener('keydown', onEscDown);
+};
+
+const removeMessage = (evt) => {
+  evt.target.remove();
+  evt.target.removeEventListener('click', removeMessage);
+  document.removeEventListener('keydown', onEscDown);
 };
 
 form.addEventListener('submit', (evt) => {
@@ -121,20 +128,15 @@ form.addEventListener('submit', (evt) => {
         evt.target.reset();
         document.body.appendChild(successMessage);
         document.addEventListener('keydown', onEscDown);
-        successMessage.addEventListener('click', () => {
-          successMessage.remove();
-        });
-
+        successMessage.addEventListener('click', removeMessage);
       } else {
         document.body.appendChild(errorMessage);
         document.addEventListener('keydown', onEscDown);
-        errorMessage.addEventListener('click', () => {
-          errorMessage.remove();
-        });
+        errorMessage.addEventListener('click', removeMessage);
       }
     });
+  document.removeEventListener('click', removeMessage);
 });
-
 
 const setFormListeners = () => {
   setInitialFormState();

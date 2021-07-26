@@ -5,6 +5,7 @@ const fetchError = (error) => {
   throw new RangeError(error);
 };
 
+
 const createFetch = () => fetch(
   SERVER_DATA_GET,
   {
@@ -22,7 +23,6 @@ const createFetch = () => fetch(
   .catch((err) => {
     fetchError(err);
   });
-
 
 export { createFetch, SERVER_DATA_POST };
 

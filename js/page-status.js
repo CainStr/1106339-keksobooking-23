@@ -6,16 +6,13 @@ const ACTIVATION = true;
 const DEACTIVATION = false;
 
 const changeStatusPage = (status) => {
-  mapFilters.classList.add('ad-form--disabled');
-  form.classList.add('ad-form--disabled');
 
   if (status === ACTIVATION) {
     formFieldsets.forEach((item) => {
       item.disabled = ACTIVATION;
     });
-    for (let item = 0; item < childMapFilters.length; item++) {
-      childMapFilters[item].disabled = ACTIVATION;
-    }
+
+    Array.from(childMapFilters).forEach((item) => item.disabled = ACTIVATION);
 
   } else {
     mapFilters.classList.remove('ad-form--disabled');
@@ -23,12 +20,11 @@ const changeStatusPage = (status) => {
     formFieldsets.forEach((item) => {
       item.disabled = DEACTIVATION;
     });
-    for (let item = 0; item < childMapFilters.length; item++) {
-      childMapFilters[item].disabled = DEACTIVATION;
-    }
+
+    Array.from(childMapFilters).forEach((item) => item.disabled = DEACTIVATION);
   }
 };
 
-changeStatusPage(DEACTIVATION);
+changeStatusPage(ACTIVATION);
 
-export {changeStatusPage};
+export {changeStatusPage, ACTIVATION, DEACTIVATION};

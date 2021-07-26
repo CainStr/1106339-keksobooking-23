@@ -49,7 +49,6 @@ const drawFilterOnMap =(evt) => {
     ))
     .then((filterOffers) => createCustomMarker(filterOffers));
   mapFiltersForm.removeEventListener('change',  debounce(drawFilterOnMap, 500));
-
 };
 
 mapFiltersForm.addEventListener('change',  debounce(drawFilterOnMap, 500));
